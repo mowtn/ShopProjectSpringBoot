@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+</head>
+<body>
+<main class="container">
+    <header class="row text-center"></header>
+
+    <section class="row">
+        <div class="col mt-4 ">
+            <form action="#" th:action="@{/Product/saveOrUpdate}" th:object="${productItem}" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-7">
+
+                                <div class="form-group">
+                                    <label for="name">Name: </label>
+                                    <input type="text"  th:field="*{name}" class="form-control" name="name" id="name" aria-describedby="nameHid" placeholder="Name Product">
+                                    <small id="nameHid" class="form-text text-muted">Name is required</small>
+                                </div>
+                                <div class="input-group form-group">
+                                    <span class="input-group-text">Price</span>
+                                    <input type="number" th:field="*{price}" name="price" id="price" class="form-control" placeholder="Price">
+                                    <span class="input-group-text">VNĐ</span>
+                                </div>
+                                <div class="input-group form-group">
+                                    <span class="input-group-text">Discount</span>
+                                    <input type="number" th:field="*{discount}" name="discount" id="discount" class="form-control" placeholder="Discount">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Category</label>
+                                    <select class="form-control" name="categoryId" id="categoryId" th:field="*{categoryId}">
+                                        <option th:each="item :${categories}" th:value="${item.categoryId}"
+                                                th:text="${item.name}" th:selected="${item.categoryId == productItem.categoryId}">Danh mục sản phẩm</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Status</label>
+                                    <select class="form-control" th:field="*{status}" name="" id="">
+                                        <option value="1">Out of Stock</option>
+                                        <option value="2">On sale</option>
+                                        <option value="3">Featured</option>
+                                        <option value="4">BestSeller</option>
+                                        <option value="5">Out of order</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="avatar">Chosse Image</label>
+                                    <input type="file"  class="form-control-file" name="avatarUrl" id="avatar" placeholder="avatar" aria-describedby="AvatarId">
+                                    <small id="avatarId" class="form-text text-muted">Avatar is required</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avatar">Chosse Image 1</label>
+                                    <input type="file"  class="form-control-file" name="ImgUrl1" id="imgUrl1" placeholder="ImgUrl1" aria-describedby="ImgUrl1Id">
+                                    <small id="ImgUrl1Id" class="form-text text-muted">ImgUrl1 is required</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avatar">Chosse Image 2</label>
+                                    <input type="file"  class="form-control-file" name="ImgUrl2" id="imgUrl2" placeholder="ImgUrl2" aria-describedby="ImgUrl2Id">
+                                    <small id="ImgUrl2Id" class="form-text text-muted">ImgUrl2 is required</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avatar">Chosse Image 3</label>
+                                    <input type="file" class="form-control-file" name="ImgUrl3" id="imgUrl3" placeholder="ImgUrl3" aria-describedby="ImgUrl3Id">
+                                    <small id="ImgUrl3Id" class="form-text text-muted">ImgUrl3 is required</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avatar">Chosse Image 4</label>
+                                    <input type="file"  class="form-control-file" name="ImgUrl4" id="imgUrl4" placeholder="ImgUrl4" aria-describedby="ImgUrl4Id">
+                                    <small id="ImgUrl4Id" class="form-text text-muted">ImgUrl4 is required</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" th:field="*{Description}" name="description" id="description" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-mute">
+                        <button type="submit" class="btn btn-secondary">Save</button>
+                        <a class="btn btn-success">List Product</a>
+                        <a class="btn btn-danger float-right"> Delete</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="row"></footer>
+</main>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
