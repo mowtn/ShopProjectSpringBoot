@@ -18,6 +18,145 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  <style>
+      @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+      @media (min-width: 992px){
+        .modal-lg, .modal-xl {
+             max-width: 1200px;
+        }
+      }
+      @media (min-width: 992px){
+      .modal-lg, .modal-xl {
+        max-width: 939px;
+      }
+    }
+
+        .start{
+          width: 100%;
+          height: auto;
+        }
+
+
+      .product-main {
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.5px solid #ccc;
+}
+
+.main-listImg {
+
+  display: flex;
+  justify-content: space-between;
+}
+
+    .main-listImg .imgItem {
+
+      width: 23%;
+    height: 120px;
+    margin-bottom: 5px;
+    background-color: black;
+    }
+
+.main-listImgMain {
+
+    justify-content: center;
+    position: relative;
+}
+
+    .main-listImgMain img {
+        max-width: 100%;
+        height: auto
+    }
+
+
+
+.main-atr {
+    width: 100%;
+    padding-left: 24px;
+}
+
+    .main-atr h1 {
+        font-size: 19px;
+        line-height: 1.8;
+        font-weight: bolder;
+    }
+
+    .main-atr p {
+        font-size: 19px;
+        font-weight: 900;
+        line-height: 1.5;
+    }
+
+    .main-atr ul {
+        display: flex;
+        justify-content: space-between;
+        width: 200px;
+    }
+
+    .main-atr span:hover {
+        opacity: 1;
+    }
+
+    .main-atr li {
+        list-style: none;
+        position: relative;
+        display: block;
+        padding-bottom: 1px;
+        width: 33px;
+        font-size: 17px;
+        padding-left: 6px;
+    }
+
+        .main-atr li::after {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: black;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0)
+        }
+
+        .main-atr li:hover {
+            color: rebeccapurple;
+            cursor: pointer;
+        }
+            .main-atr li:hover::after {
+                transform: scaleX(1);
+                transition: ease ;
+            }
+ .count-iem {
+                display: flex;
+                width: 29%;
+                justify-content: space-between;
+                margin: 41px 0 16px;
+                height: 29px;
+            }
+    .count-iem p {
+        font-size: 12px;
+        padding-top: 5px;
+        margin-right: 9px;
+    }
+    .count-iem button {
+        width: 35px;
+        border-style: none;
+        background-color: white;
+        border: 0.5px solid #000000;
+    }
+
+        .count-iem button:hover {
+            background-color: #000000;
+            color: white
+        }
+    .count-iem input {
+        width: 35px;
+    }
+
+    </style>
 </style>
 <body>
 <main class="container">
@@ -89,7 +228,9 @@
               <td class="Description" th:text="${product.Description}"></td>
               <td th:text="${product.createDate}"></td>
               <td>
-                <a href="" class="btn btn-outline-info"><i class="fas fa-info"></i></a>
+                <button type="button" class="btn btn-lg btn-warning" data-toggle="modal" data-target="#myModal">
+                  <a th:href="@{'/Product/'+${currentPage}+'/'+${product.productId}}">Chi tiết</a>
+                </button>
                 <a th:href="@{'/Product/edit/'+${product.productId}}" class="btn btn-outline-warning"><i class="fas fa-info"></i></a>
                 <a th:href="@{'/Product/delete/'+${product.productId}}" class="btn btn-outline-danger"><i class="fas fa-recycle"></i></a>
               </td>
@@ -131,6 +272,82 @@
             </ul>
           </nav>
         </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="product-main">
+              <div class="start" style="display: flex;
+                    justify-content: start;
+                    flex-direction: column-reverse;">
+                <div class="main-listImg">
+                  <div class="imgItem">
+                    <img th:src="@{'/getImage/'+${item.ImgUrl1}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
+                  </div>
+                  <div class="imgItem">
+                    <img th:src="@{'/getImage/'+${item.ImgUrl2}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
+                  </div>
+                    <img th:src="@{'/getImage/'+${item.ImgUrl3}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
+                  <div class="imgItem">
+                  </div>
+                  <div class="imgItem">
+                    <img th:src="@{'/getImage/'+${item.ImgUrl4}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
+                  </div>
+                </div>
+                <div class="main-listImgMain">
+                  <img th:src="@{'/getImage/'+${item.avatarUrl}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
+                </div>
+              </div>
+              <div class="main-atr">
+                <h1 th:text="${item.name}"></h1>
+                <p th:text="${item.ImgUrl1}">.000đ</p>
+                <div style="    line-height: 2.5;
+         font-size: 13px; margin-top: 24px;">
+                  Kích cỡ sản phẩm<span style="opacity: 0.7;"></span>
+                  <ul>
+                    <li>S</li>
+                    <li>M</li>
+                    <li>L</li>
+                    <li>XL</li>
+                    <li>XXL</li>
+                  </ul>
+                </div>
+                <div>
+                  <h2 style="font-size: 14px; margin-top: 12px;">Các màu sản phẩm</h2>
+                </div>
+
+
+                <ul style="margin-top: 25px;width:150px;">
+                  <li><div style="display:inline-block; background-color:black; height:30px;width:30px;border:0.5px solid #000000"></div></li>
+                  <li><div style="display:inline-block; background-color:red; height:30px;width:30px; border:0.5px solid #000000 "></div></li>
+                  <li><div style="display:inline-block; background-color:white; height:30px;width:30px;border:0.5px solid #000000"></div></li>
+                  <li><div style="display:inline-block; background-color:green; height:30px;width:30px;border:0.5px solid #000000"></div></li>
+                </ul>
+
+                <div class="count-iem">
+                  <p>Số Lượng còn lại</p>
+                  <input id="ipQuantity" style="padding-left: 10px" type="text" value="1" />
+                </div>
+                <div class="description">
+                  <h2>Mô tả sản phẩm</h2>
+                    <p th:text="${item.description}"></p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

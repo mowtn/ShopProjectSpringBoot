@@ -4,6 +4,7 @@ import com.example.Shop.Domain.Category;
 import com.example.Shop.Domain.Product;
 import com.example.Shop.Model.CategoryDto;
 import com.example.Shop.Model.ProductDto;
+import com.example.Shop.Response.ProductResponse;
 import com.example.Shop.Service.ICategoriesService;
 import com.example.Shop.Service.IProductService;
 import com.example.Shop.Service.Impl.ProductServiceImpl;
@@ -49,11 +50,30 @@ public class ProductController {
     public String viewpage(Model model, @PathVariable("pageNum") int pageNum){
         Page<Product> page = iProductService.findAll(pageNum);
         List<Product> productList = page.getContent();
+        ProductResponse item = new ProductResponse();
         model.addAttribute("listProduct",productList);
+        model.addAttribute("item",item);
         model.addAttribute("currentPage",pageNum);
         model.addAttribute("totalPage",page.getTotalPages());
         model.addAttribute("totalItem",page.getTotalElements());
-
+        return "admin/listProduct";
+    }
+    @GetMapping("/viewpage/{pageNum}/{id}")
+    public String viewItemDetail(Model model, @PathVariable("pageNum") int pageNum,@PathVariable("id") int id){
+        System.out.println("đã vào");
+        Page<Product> page = iProductService.findAll(pageNum);
+        List<Product> productList = page.getContent();
+        ProductResponse item = new ProductResponse();
+        productList.forEach(s->{
+            if(s.getProductId()==id){
+                BeanUtils.copyProperties(s,item);
+            }
+        });
+        model.addAttribute("listProduct",productList);
+        model.addAttribute("item",item);
+        model.addAttribute("currentPage",pageNum);
+        model.addAttribute("totalPage",page.getTotalPages());
+        model.addAttribute("totalItem",page.getTotalElements());
         return "admin/listProduct";
     }
     @GetMapping("/new")
@@ -61,15 +81,19 @@ public class ProductController {
         model.addAttribute("productItem",new ProductDto());
         return "admin/addOrEditPro";
     }
-    @PutMapping("/edit/{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView editById(@PathVariable("id")Long id){
-        ModelAndView modelAndView = new ModelAndView("newProduct");
+        System.out.println("đã vào");
+        ModelAndView modelAndView = new ModelAndView("admin/addOrEditPro");
         Optional<Product> product = iProductService.findById(id);
-        ProductDto productDto = new ProductDto();
+        ProductResponse productDto = new ProductResponse();
         if(product.isPresent()){
             Product pro = product.get();
-            BeanUtils.copyProperties(pro,productDto,"id");
-            modelAndView.addObject("product",productDto);
+            BeanUtils.copyProperties(pro,productDto);
+            productDto.setAvatarUrl(product.get().getAvatar());
+            modelAndView.addObject("productItem",productDto);
+
+
         }else {
             modelAndView.addObject("message","Product not exist!");
         }
@@ -93,27 +117,27 @@ public class ProductController {
             InputStream inputStream = productDto.getAvatarUrl().getInputStream();
             Files.copy(inputStream,path.resolve(productDto.getAvatarUrl().getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            product.setAvatar(productDto.getAvatarUrl().getOriginalFilename().toLowerCase());
+            product.setAvatar(productDto.getAvatarUrl().getOriginalFilename());
             //img1
              inputStream = productDto.getImgUrl1().getInputStream();
             Files.copy(inputStream,path.resolve(productDto.getImgUrl1().getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            product.setImgUrl1(productDto.getImgUrl1().getOriginalFilename().toLowerCase());
+            product.setImgUrl1(productDto.getImgUrl1().getOriginalFilename());
             //img2
              inputStream = productDto.getImgUrl2().getInputStream();
             Files.copy(inputStream,path.resolve(productDto.getImgUrl2().getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            product.setImgUrl2(productDto.getImgUrl2().getOriginalFilename().toLowerCase());
+            product.setImgUrl2(productDto.getImgUrl2().getOriginalFilename());
             //img3
              inputStream = productDto.getImgUrl3().getInputStream();
             Files.copy(inputStream,path.resolve(productDto.getImgUrl3().getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            product.setImgUrl3(productDto.getImgUrl3().getOriginalFilename().toLowerCase());
+            product.setImgUrl3(productDto.getImgUrl3().getOriginalFilename());
             //img4
              inputStream = productDto.getImgUrl4().getInputStream();
             Files.copy(inputStream,path.resolve(productDto.getImgUrl4().getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
-            product.setImgUrl4(productDto.getImgUrl4().getOriginalFilename().toLowerCase());
+            product.setImgUrl4(productDto.getImgUrl4().getOriginalFilename());
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -122,10 +146,15 @@ public class ProductController {
         iProductService.save(product);
         return "redirect:/Product/";
     }
-    @RequestMapping("/Delete/{id}")
+    @RequestMapping("/delete/{id}")
     public String deleteById(@PathVariable("id")Long id){
         iProductService.deleteById(id);
         return "redirect:/Product/";
+    }
+    @RequestMapping("/detail/{id}")
+    public String detailProduct(@PathVariable("id")Long id){
+
+        return "admin/detailProduct";
     }
 
 }

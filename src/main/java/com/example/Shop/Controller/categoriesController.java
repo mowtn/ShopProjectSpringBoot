@@ -78,6 +78,7 @@ public class categoriesController {
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable(name = "id")int id){
         iCategoriesService.deleteById(id);
+        System.out.println("Xóa sản phẩm thành công");
         return "redirect:/Category/";
     }
 

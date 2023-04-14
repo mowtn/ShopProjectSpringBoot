@@ -25,8 +25,8 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7">
-
+                            <div class="col-12">
+                                <input type="hidden" th:field="*{productId}">
                                 <div class="form-group">
                                     <label for="name">Name: </label>
                                     <input type="text"  th:field="*{name}" class="form-control" name="name" id="name" aria-describedby="nameHid" placeholder="Name Product">
@@ -60,37 +60,42 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-3">
+                        </div>
+                        <div class="row">
                                 <div class="form-group">
                                     <label for="avatar">Chosse Image</label>
                                     <input type="file"  class="form-control-file" name="avatarUrl" id="avatar" placeholder="avatar" aria-describedby="AvatarId">
                                     <small id="avatarId" class="form-text text-muted">Avatar is required</small>
+                                    <img th:src="@{'/getImage/'+*{avatarUrl}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="avatar">Chosse Image 1</label>
                                     <input type="file"  class="form-control-file" name="ImgUrl1" id="imgUrl1" placeholder="ImgUrl1" aria-describedby="ImgUrl1Id">
                                     <small id="ImgUrl1Id" class="form-text text-muted">ImgUrl1 is required</small>
+                                    <img th:src="@{'/getImage/'+*{ImgUrl1}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="avatar">Chosse Image 2</label>
                                     <input type="file"  class="form-control-file" name="ImgUrl2" id="imgUrl2" placeholder="ImgUrl2" aria-describedby="ImgUrl2Id">
                                     <small id="ImgUrl2Id" class="form-text text-muted">ImgUrl2 is required</small>
+                                    <img th:src="@{'/getImage/'+*{ImgUrl2}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="avatar">Chosse Image 3</label>
                                     <input type="file" class="form-control-file" name="ImgUrl3" id="imgUrl3" placeholder="ImgUrl3" aria-describedby="ImgUrl3Id">
                                     <small id="ImgUrl3Id" class="form-text text-muted">ImgUrl3 is required</small>
+                                    <img th:src="@{'/getImage/'+*{ImgUrl3}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="avatar">Chosse Image 4</label>
                                     <input type="file"  class="form-control-file" name="ImgUrl4" id="imgUrl4" placeholder="ImgUrl4" aria-describedby="ImgUrl4Id">
                                     <small id="ImgUrl4Id" class="form-text text-muted">ImgUrl4 is required</small>
+                                    <img th:src="@{'/getImage/'+*{ImgUrl4}}" width="100" height="100" class="img-fluid" alt="Ảnh sản phẩm">
                                 </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col">

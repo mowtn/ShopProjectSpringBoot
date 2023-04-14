@@ -30,8 +30,8 @@
             <h2 th:unless="*{isEdit}">Thêm danh mục sản phẩm</h2>
           </div>
           <div class="card-body">
-            <input type="hidden" th:field="*{categoryId}">
-            <div class="form-group">
+
+            <div class="form-group"><input type="hidden" th:field="*{categoryId}">
               <label for="name">Name: </label>
               <input type="text" th:field="*{name}" class="form-control" name="name" id="name" aria-describedby="nameHid" placeholder="Category Name">
               <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" id="nameHid" class="form-text text-muted">Name is required</p>
